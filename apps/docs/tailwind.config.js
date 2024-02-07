@@ -10,8 +10,8 @@ export default {
   ],
   theme: {
     backgroundImage: {
-      "hero-lg": "url('./svg/homepage-desktop.svg')",
-      "hero-sm": "url('./svg/homepage-mobile.svg')",
+      "hero-lg": "url('assets/svg/homepage-desktop.svg')",
+      "hero-sm": "url('assets/svg/homepage-mobile.svg')",
     },
     extend: {
       fontFamily: {

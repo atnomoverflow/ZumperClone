@@ -80,7 +80,7 @@ const options: Options = {
 
 }
 const menuStack = ref([] as String[]);
-const emit = defineEmits(['toggleMenu', 'escape'])
+const emit = defineEmits(['toggleMenu', 'escape','openLoginModal', 'openSignupModal'])
 watch(
     () => props.openMenu,
     () => {
@@ -113,10 +113,11 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div v-if="openMenu" class="relative">
-        <button v-if="openMenu" @click="$emit('toggleMenu')" tabindex="-1" class="fixed inset-0 w-full h-full"></button>
+    <div v-if="props.openMenu" class="relative">
+        <button v-if="props.openMenu" @click="$emit('toggleMenu')" tabindex="-1"
+            class="fixed inset-0 w-full h-full"></button>
         <div v-if="menuStack.length == 0"
-            class="absolute w-52 right-0 top-3 mt-2 font-inter bg-white border rounded-lg shadow-md">
+            class="absolute w-52 right-0 top-8 mt-2 font-inter bg-white border rounded-lg shadow-md">
             <ul class="py-2 space-y-1 text-sm text-gray-700 border-b-2">
                 <li>
                     <NuxtLink class="block px-4 py-2 hover:bg-gray-100" href="/">
@@ -157,18 +158,18 @@ onMounted(() => {
             </ul>
             <ul class="py-2 space-y-1 text-sm text-gray-700">
                 <li>
-                    <NuxtLink class="block px-4 py-2  hover:bg-gray-100" href="/">
+                    <button class="flex w-full items-start px-4 py-2 hover:bg-gray-100" @click="()=>$emit('openLoginModal')">
                         Log in
-                    </NuxtLink>
+                    </button>
                 </li>
                 <li>
-                    <NuxtLink class="block px-4 py-2  hover:bg-gray-100" href="/">
+                    <button class="flex w-full items-start px-4 py-2 hover:bg-gray-100" @click="$emit('openSignupModal')">
                         Signup
-                    </NuxtLink>
+                    </button>
                 </li>
             </ul>
         </div>
-        <div v-else class="absolute w-52 right-0 top-3 mt-2 font-inter bg-white border rounded-lg shadow-md">
+        <div v-else class="absolute w-52 right-0 top-8  mt-2 font-inter bg-white border rounded-lg shadow-md">
             <ul class="py-2 space-y-1 text-sm text-gray-700">
                 <li>
                     <button class="flex justify-start items-center w-full px-2 py-2 text-gray-500 hover:bg-gray-100"
@@ -189,4 +190,5 @@ onMounted(() => {
                 </li>
             </ul>
         </div>
-</div></template>
+    </div>
+</template>

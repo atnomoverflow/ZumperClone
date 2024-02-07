@@ -1,32 +1,43 @@
 <script setup lang="ts">
-import { NavbarDesktopMenu, NavbarMobileMenu } from '#components';
+import { NavbarDesktopMenu, NavbarLoginModal, NavbarMobileMenu, NavbarSignUpModal } from '#components';
 import { ref, onMounted, onUnmounted } from 'vue';
 
+
+const isLoginModalOpen = ref(false)
 const openMenu = ref(false);
-
 const isMobile = ref(false);
+const isSignupModalOpen = ref(false)
 
+
+const closeLoginModal = () => {
+    isLoginModalOpen.value = false
+}
+const openLoginModal = () => {
+    isLoginModalOpen.value = true
+}
+const closeSignupModal = () => {
+    isSignupModalOpen.value = false
+}
+const openSignupModal = () => {
+    isSignupModalOpen.value = true
+}
 const updateWindowSize = () => {
     isMobile.value = screen.width <= 1024;
 };
 const toggleMenu = () => {
     openMenu.value = !openMenu.value;
 }
-const escape=()=>{
+const escape = () => {
     openMenu.value = false
 }
 onMounted(() => {
-    // Add event listener when the component is mounted
     window.addEventListener('resize', updateWindowSize);
-    // Initial calculation
     updateWindowSize();
 });
-
 onUnmounted(() => {
     // Remove event listener when the component is unmounted
     window.removeEventListener('resize', updateWindowSize);
 });
-
 </script>
 
 <template>
@@ -54,8 +65,12 @@ onUnmounted(() => {
                 <Icon name="heroicons:user-20-solid" class="h-5 w-5 bg-slate-600 rounded-full border" color="white" />
                 <Icon name="heroicons:bars-3-16-solid" class="h-4 w-4  ml-2" color="black" />
             </button>
-            <component v-if="!isMobile" :is="NavbarDesktopMenu" :openMenu="openMenu" @escape="escape" @toggleMenu="toggleMenu"></component>
         </div>
-        <component v-if="isMobile" :is="NavbarMobileMenu" :openMenu="openMenu" @toggleMenu="toggleMenu"></component>
+        <component v-if="!isMobile" :is="NavbarDesktopMenu" :openMenu="openMenu" @escape="escape"
+            @openLoginModal="openLoginModal" @openSignupModal="openSignupModal" @toggleMenu="toggleMenu">
+        </component>
+        <component v-if="isMobile" :is="NavbarMobileMenu" :openMenu="openMenu" @toggleMenu="toggleMenu" />
+        <component :is="NavbarLoginModal" :openModal="isLoginModalOpen" @openSignupModal="openSignupModal" @closeModal="closeLoginModal" />
+        <component :is="NavbarSignUpModal" :openModal="isSignupModalOpen" @openLoginModal="openLoginModal" @closeModal="closeSignupModal" />
     </header>
 </template>
