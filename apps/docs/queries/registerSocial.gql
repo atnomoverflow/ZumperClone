@@ -1,0 +1,22 @@
+mutation RegisterSocial($inputs: RegisterSocialInput!) {
+  registerSocial(inputs: $inputs) {
+    ... on AuthUserResponse {
+      user {
+        email
+        username
+        firstName
+        lastName
+      }
+      token
+    }
+    ... on SocialAlreadyAssignedError {
+      message
+      provider
+    }
+    ... on CredentialsTakenError {
+      message
+      providedUsername
+      providedEmail
+    }
+  }
+}

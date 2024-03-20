@@ -1,0 +1,17 @@
+mutation LoginSocial($inputs: LoginSocialInput!) {
+  loginSocial(inputs: $inputs) {
+    ... on AuthUserResponse {
+      user {
+        email
+        username
+        firstName
+        lastName
+      }
+      token
+    }
+    ... on SocialNotRegisteredError {
+      message
+      provider
+    }
+  }
+}

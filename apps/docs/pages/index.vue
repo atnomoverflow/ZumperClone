@@ -4,7 +4,7 @@
 
 <template>
     <div class="h-screen v w-screen flex flex-col">
-        <navbar />
-        <HeroSection/>
+        <HomeNavbar />
+        <HomeHeroSection/>
     </div>
 </template>
